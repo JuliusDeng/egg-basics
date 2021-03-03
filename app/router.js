@@ -8,7 +8,6 @@ module.exports = app => {
   router.get('/', controller.home.index);
 	router.get('/list', controller.home.list)
 	
-	router.get('/user/list', controller.user.index)
-	router.get('/user/read/:id', controller.user.read)
-	router.post('/user/create', controller.user.create)
+	require('./router/post.js')(app)
+	require('./router/user.js')(app)
 };
