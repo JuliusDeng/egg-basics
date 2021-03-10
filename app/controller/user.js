@@ -45,14 +45,42 @@ class UserController extends Controller {
   }
 	
 	async create() {
-		console.log(this.ctx.request);
-		console.log(this.ctx.request.body);
-		this.ctx.body = {
-			msg: 'ok',
-			data: {
-				name: 'deng'
-			}
-		}
+		// 参数验证
+		// 写入数据库
+		
+		// 从ctx中取model ctx代替this.app
+		const ctx = this.ctx;
+		const {name, age} = ctx.request.body
+		// 新增单个
+		// let res = await this.app.model.User.create({
+		//     username: "ceshi3",
+		//     password: "123456",
+		//     sex: "男"
+		// });
+		
+		// 批量新增
+		
+		let res = await ctx.model.User.bulkCreate([
+			{
+			    username: "用户17",
+			    password: "密码1",
+			    sex: "男"
+			},
+			{
+			    username: "用户28",
+			    password: "密码2",
+			    sex: "男"
+			},
+			{
+			    username: "用户39",
+			    password: "密码3",
+			    sex: "男"
+			},
+		])
+		// 成功
+		this.ctx.body = res
+		
+		
 	}
 	
 }
