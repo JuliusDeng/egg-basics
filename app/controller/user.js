@@ -2,25 +2,6 @@
 
 const Controller = require('egg').Controller;
 
-const demo = [{
-  id: 1,
-  username: '用户名1',
-  nickname: '昵称1',
-  sex: '男',
-},
-{
-  id: 2,
-  username: '用户名2',
-  nickname: '昵称2',
-  sex: '男',
-},
-{
-  id: 3,
-  username: '用户名3',
-  nickname: '昵称3',
-  sex: '男',
-},
-];
 class UserController extends Controller {
   async index() {
     const result = demo;
@@ -32,16 +13,28 @@ class UserController extends Controller {
     };
   }
   async read() {
-    const id = this.ctx.params.id;
-    const detail = demo.find(e => {
-      console.log(e);
-      return e.id == id;
-    });
+    const id = parseInt(this.ctx.params.id);
+		// 通过主键查询单个数据
+		// let detail = await this.app.model.User.findByPk(id)
+		// if(!detail) {
+		// 	return this.ctx.body = {
+		// 		msg: "fali",
+		// 		data: "该用户不存在！"
+		// 	}
+		// }
+		// 查询单个
+		let detail = await this.app.model.User.findOne({
+			where: {
+				id,
+				sex: "女"
+			}
+		}) 
+		
     this.ctx.body = {
       msg: 'ok',
       data: detail,
     };
-    this.ctx.status = 201;
+    this.ctx.status = 200;
   }
 	
 	async create() {
